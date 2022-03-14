@@ -1,6 +1,5 @@
 import matplotlib
 matplotlib.use('Agg')
-
 import matplotlib.pyplot as plt
 from matplotlib import cm
 import matplotlib.image as img
