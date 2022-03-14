@@ -8,7 +8,6 @@ from random import randint
 import time
 import argparse
 import os
-# import sys
 from pathlib import Path
 from datetime import datetime
 import pandas as pd
