@@ -6,16 +6,11 @@ import pandas as pd
 import os
 import time
 
-
 plt.rcParams["font.family"] = "Times New Roman"
-
 cwdPath=Path(os.path.abspath(os.getcwd()))
 fPath = cwdPath/"data"/"forScatterPlot.csv"
-
 parDf = pd.read_csv(fPath)
-
 ltGrey=  (10,10,10)
-# plt.rcParams['savefig.facecolor']='ltGrey'
 
 # make a 3D-scatter plot of parameter-space color coded with output BoundFrac
 def plot3D_scatter(x,y,z,m,mCol,lbl,angle, dataPath):
@@ -33,10 +28,6 @@ def plot3D_scatter(x,y,z,m,mCol,lbl,angle, dataPath):
     else:
         p = ax.scatter(x, y, z, c=m, marker ='o', vmin=0, vmax=max(m), s=80, edgecolors= 'none', depthshade=False, cmap= "jet")
 
-    # just a test - to annotate each data point with its value
-    # for i in range(len(m)):
-    #     ax.text(x[i],y[i],z[i],  f"{m[i]:.2f}", size=5, zorder=10*i,color='k')
-    # ax.set_color('grey')
     cbar= fig.colorbar(p, ax=ax, aspect = 40, shrink= 0.6)
     cbar.set_label(lbl)
     ax.set_xlabel(r'$Narrowness$', **csfont)
