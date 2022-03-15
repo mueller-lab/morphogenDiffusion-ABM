@@ -1,9 +1,9 @@
 # morphogenDiffusion-ABM
 The program simulate an agent-based model of morphogen diffusion in extracellular space on a two-dimesional grid.
 
-Developer- Amit Landge (amit.landge@uni-konstanz.de)
-Requires- Python3
-Dependencies- listed in require.yml
+Developer- Amit Landge (amit.landge@uni-konstanz.de) \
+Requires- Python3 \
+Dependencies- listed in require.yml \
 
 Usage-
 - morphogenDiffusionABM.py [-h] [-n NUM [NUM ...]]
