@@ -1,3 +1,10 @@
+"""Agent-based modeling of morphogen diffusion in extracellular cavities and interstitial spaces.
+
+The morphogens are the agents. The class agent has following attributes - id, type, name, pos, track, bState, bdTime,
+resTime, bdCount, isBound, diffCoef, dist, jump.
+Another class called 'simulateABM' contains methods to initialize the agents, update the states at each simulation step,
+and record the observations.
+"""
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -13,13 +20,6 @@ from datetime import datetime
 import pandas as pd
 from scipy.stats import gaussian_kde
 
-"""Agent-based modeling of morphogen diffusion in extracellular cavities and interstitial spaces.
-
-The morphogens are the agents. The class agent has following attributes - id, type, name, pos, track, bState, bdTime,
-resTime, bdCount, isBound, diffCoef, dist, jump.
-Another class called 'simulateABM' contains methods to initialize the agents, update the states at each simulation step,
-and record the observations.
-"""
 class agent(object):
     """Generates agents and stores their attributes."""
     def __init__(self, id):
