@@ -1,3 +1,10 @@
+"""This is a script to load the saved tracks.csv files to -
+
+1. make track movies
+2. analyze jump sizes and estimate diffusion coefficients
+3. make histogram of angle distributions
+4. load image grid and select interface and cavities
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
@@ -7,18 +14,11 @@ import os
 import time
 import seaborn as sns
 
-
-"""
-This is a script to load the saved tracks.csv files to -
-1. make track movies
-2. analyze jump sizes and estimate diffusion coefficients
-3. make histogram of angle distributions
-4. load image grid and select interface and cavities
-"""
-
 # define a function to extract binding times and plot the binding time distribution for each ligand
 def getBoundFrac(bindXY, trackXY, posArr=None):
-    """A function to get agent bound-fraction at the end of simulation (overall, in cavity, in interface)"""
+    """
+    A function to get agent bound-fraction at the end of simulation (overall, in cavity, in interface)
+    """
     sp = bindXY.shape
     trackXY=trackXY.astype(int)
 
@@ -26,7 +26,6 @@ def getBoundFrac(bindXY, trackXY, posArr=None):
         bindXY2=np.copy(bindXY)
         posArr=posArr.astype(int)
         aSet = set([tuple(x) for x in posArr])
-        # set bindXY[i,j]= 0 if it is not located in the given subGrid (not in aSet)
         agCnt = sp[0]
         for i in range(sp[0]):
             pos = tuple(trackXY[i,-1,:])
@@ -87,6 +86,7 @@ def plotBindTimes(bindingDf, dir, iRng, subG="all", xRng=[0,20], bins =40):
     #plot binding time histogram
     for k,v in subDict.items():
         v=np.array(v)
+        meanV = np.sum(v)/len(v)
         fig, axs= plt.subplots(2)
         fig.tight_layout()
         axs[0].set_xlim(xRng[0],xRng[1])
@@ -95,6 +95,8 @@ def plotBindTimes(bindingDf, dir, iRng, subG="all", xRng=[0,20], bins =40):
         hist= hist/sum(hist) if sum(hist)>0 else hist
         binW= np.diff(bin)[0]
         axs[0].bar(bin[:-1], hist, width=binW, align='edge',label=k)
+        ymx = np.max(hist)
+        axs[0].text(0.6*xRng[1],0.2*ymx, f"mean rTm = {meanV:.2f} s")
         axs[0].legend()
 
         #plot dissociation rates on a log scale
@@ -110,6 +112,7 @@ def plotBindTimes(bindingDf, dir, iRng, subG="all", xRng=[0,20], bins =40):
 
         plt.savefig(dir/f"bindTimeHist_{subG}_{k}.tif")
         plt.close()
+    return meanV
 
 #function to calculate jump distances
 def getJumps(tracks, posArr=None, iRng = 6):
@@ -120,7 +123,6 @@ def getJumps(tracks, posArr=None, iRng = 6):
         xt =np.array(tracks.iloc[2*i,:])
         yt =np.array(tracks.iloc[2*i+1,:])
         xyAr = np.stack((xt,yt), axis=1)
-
         for j in range(len(xyAr)-1):
             if posArr is None:
                 on1 = 1
@@ -147,7 +149,6 @@ def getAngles(tracks, posArr=None, iRng = 6):
         xt =np.array(tracks.iloc[2*i,:])
         yt =np.array(tracks.iloc[2*i+1,:])
         xyAr = np.stack((xt,yt), axis=1)
-
         for j in range(len(xyAr)-2):
             if posArr is None:
                 on1 = 1
@@ -212,6 +213,7 @@ def plotJumps(jumpDict, dir, subG = "all", xRng=[0,1.6], bins =100):
         plt.legend()
         plt.savefig(dir/f"jumpHist_{subG}_{k}.tif")
         plt.close()
+# plt.show()
 
 # a function to plot angle histogram
 def plotAngles(angDict, dir, subG = "all"):
@@ -265,10 +267,11 @@ def getNeighbours(pos, r, gS, any=0):
     return neighbours
 
 # a function to isolate cavity and interface subgrids
-def getSubGrids(grid1, nonZeroPos, r=75, itrs=5000):
+def getSubGrids(grid1, nonZeroPos, r=150, itrs=5000):
     print("getting the dictSubGrids[Cvt]...")
     grid = np.copy(grid1)
     gS = grid.shape
+    # itrs= int(gS[0]*gS[1]*10**-3)
     dictSubGrids={}
     dictSubGrids["Cvt"] = []
     randIds = np.random.choice([i for i in range(len(nonZeroPos))], itrs)
@@ -314,10 +317,13 @@ def makeJumpDict(jumpAr, agList):
     for arr, key1 in zip(jumpAr, agList):
         jumpDict[key1] = arr
 
+    # print(f"jumpDict is {jumpDict}")
     jumpDt={}
     jumpDt["morphogen"]= []
 
     for k, v in jumpDict.items():
+        # jumpDt[k[:-5]].append(v)
+        # in case the agent names don't have the same pattern of indexing
         k1 = k.index('_')
         jumpDt[k[:k1]].append(v)
 
@@ -330,13 +336,15 @@ if __name__=="__main__":
     t1 = time.time()
 
     cwdPath=Path(os.path.abspath(os.getcwd()))
-    dataPath = cwdPath/"data"/"parScr1"
-    # dataPath = cwdPath/"data"
+    # dataPath = cwdPath/"data"/"parScr1"
+    dataPath = cwdPath/"data"
     dirList = [f for f in dataPath.iterdir() if f.is_dir()]
-    parFile = str(cwdPath/"parFile_20220213.csv")
+    # parFile = str(cwdPath/"parFile_20220213.csv")
+    parFile = str(cwdPath/"parFile_20220301.csv")
     parDf = pd.read_csv(parFile, header=0, index_col = None)
     parDf.index = [i for i in range(parDf.shape[0])]
 
+    # print(f"parDf.head is {parDf.head}")
     outList = []
     # inDir = "20220128_132858_2000steps_grid_s8192_4_scaled"
     for inDir in dirList:
@@ -350,6 +358,8 @@ if __name__=="__main__":
 
             outPath = inPath/"analysis"
             outPath.mkdir(mode=0o777, parents=True, exist_ok=True)
+            # print("made analysis dir")
+
 
             # load the tracks.csv
             trackFile = str(inPath/"tracks.csv")
@@ -377,10 +387,12 @@ if __name__=="__main__":
             trkSp = tracksX.shape
 
             tracksXY = np.dstack([tracksX, tracksY]).reshape(trkSp[0], trkSp[1], 2)
+            # print(f"trackXY.shape is {tracksXY.shape}")
+
             bindXY = bindingDf.to_numpy()
 
-            plotBindTimes(bindingDf, outPath, iRng, xRng=[0,20], bins= 20)
 
+            mean_rTm = plotBindTimes(bindingDf, outPath, iRng, xRng=[0,100], bins= 50)
             nonZeroPos = np.argwhere(grid1)
             dictSubGrids = getSubGrids(grid1, nonZeroPos) # generates a dictionary with radius as key and np array of subgrid positions as values
             plotSubGrids(grid1,dictSubGrids,outPath)
@@ -394,12 +406,8 @@ if __name__=="__main__":
             print("getting jumps ...")
 
             jumpAr = getJumps(tracks, iRng = iRng)
-
             jumpAr_C = getJumps(tracks, dictSubGrids["Cvt"], iRng = iRng)
-
             jumpAr_I = getJumps(tracks, dictSubGrids["Ifc"], iRng = iRng)
-
-
             jumpDt = makeJumpDict(jumpAr, agList)
             jumpDt_C = makeJumpDict(jumpAr_C, agList)
             jumpDt_I = makeJumpDict(jumpAr_I, agList)
@@ -408,13 +416,18 @@ if __name__=="__main__":
             jmp= getAvgJump(jumpDt)
             jmpC=getAvgJump(jumpDt_C)
             jmpI=getAvgJump(jumpDt_I)
+            dt= 0.01
+            avD = jmp**2/(4*dt)
+            avD_C= jmpC**2/(4*dt)
+            avD_I= jmpI**2/(4*dt)
 
             #get spot density ratio (cavity/Ifc)
             sptDC=spotRto(tracksXY, dictSubGrids["Cvt"])
             sptDI=spotRto(tracksXY, dictSubGrids["Ifc"])
             sptCbyI=sptDC/sptDI
 
-            outList.append([parID, frac, fracC, fracI, jmp, jmpC, jmpI, sptDC, sptDI, sptCbyI])
+            outList.append([parID, frac, fracC, fracI, jmp, jmpC, jmpI, sptDC, sptDI, sptCbyI, mean_rTm, avD, \
+            avD_C, avD_I])
             # calculate angle distribution
             print("getting angles ...")
             angAr = getAngles(tracks, iRng = iRng)
@@ -431,8 +444,10 @@ if __name__=="__main__":
             # plotRng = [i for i in range(iRng)]
             plotAngles(angDt, outPath)
             plotJumps(jumpDt, outPath)
+
             plotAngles(angDt_C, outPath,subG = "Cvt")
             plotJumps(jumpDt_C, outPath, subG = "Cvt")
+            #
             plotAngles(angDt_I, outPath,subG = "Ifc" )
             plotJumps(jumpDt_I, outPath, subG = "Ifc")
         else:
@@ -440,6 +455,9 @@ if __name__=="__main__":
 
     bFracArr= np.array(outList)
     bFracArr=bFracArr[bFracArr[:,0].argsort()]
+    # to make the bFracArr same size as parDf
+    # bFracArr = np.concatenate((np.zeros((60,14)),bFracArr),  axis=0)
+
     parDf['bFrac']= bFracArr[:,1]
     parDf['bFracC']= bFracArr[:,2]
     parDf['bFracI']= bFracArr[:,3]
@@ -449,6 +467,10 @@ if __name__=="__main__":
     parDf['sptDC']=bFracArr[:,7]
     parDf['sptDI']=bFracArr[:,8]
     parDf['sptCbyI']=bFracArr[:,9]
+    parDf['mean_rTm']=bFracArr[:,10]
+    parDf['avD'] = bFracArr[:,11]
+    parDf['avD_C']=bFracArr[:,12]
+    parDf['avD_I']=bFracArr[:,13]
 
 
     # modify recepDens column -
@@ -457,7 +479,6 @@ if __name__=="__main__":
 
     parDfName= str(dataPath/'forScatterPlot.csv')
     parDf.to_csv(parDfName, index_label="ID")
-
 
     t2= time.time()
     totalSec= t2-t1
