@@ -3,7 +3,7 @@ The program simulate an agent-based model of morphogen diffusion in extracellula
 
 Developer- Amit Landge (amit.landge@uni-konstanz.de) \
 Requires- Python3 \
-Dependencies- listed in require.yml \
+Dependencies- listed in require.yml 
 
 Usage-
 - morphogenDiffusionABM.py [-h] [-n NUM [NUM ...]]
