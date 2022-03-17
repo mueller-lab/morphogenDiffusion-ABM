@@ -41,7 +41,7 @@ optional arguments:
                         Row number in the parameter file. default=0
 
 Example -
-python -u morphogenDiffusionABM.py -n 200 0 0 0 100 -st 100 -nrw 1 -slr 0 4 -uImg Yes \
+python -u morphogenDiffusionABM.py -n 200 0 0 0 100 -st 100 -nrw 1 -slr 0 4 -uImg Yes 
 -iName s8192_4_scaled 1> out.log 2>&1
 
 * trackAnalysis.py \

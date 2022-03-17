@@ -33,8 +33,6 @@ class agent(object):
         self.id = id
         self.type="protein"
 
-
-    # plt.close()
 class simulateABM(object):
     """Contains methods to run the simulations.
 
