@@ -1,4 +1,4 @@
-## morphogenDiffusion-ABM
+## MorphogenDiffusion-ABM
 
 The program simulates an agent-based model of morphogen diffusion in extracellular space on a two-dimensional grid.
 
