@@ -15,7 +15,7 @@ morphogenDiffusionABM.py [-h] [-n NUM [NUM ...]]
                                 [-uImg USEIMG] [-iName IMGNAME]
                                 [-parScr PARAMETERSCREEN] [-parID PARAMETERID]
 ```
-"""
+```
 optional arguments:
   - h, --help            show this help message and exit
   - n NUM [NUM ...], --num NUM [NUM ...]
@@ -40,7 +40,7 @@ optional arguments:
                         Whether to perform a parameter screen. default=No
   - parID PARAMETERID, --parameterID PARAMETERID
                         Row number in the parameter file. default=0
-"""
+```
 
 - Example  
 ```python -u morphogenDiffusionABM.py -n 200 0 0 0 100 -st 100 -nrw 1 -slr 0 4 -uImg Yes -iName s8192_4_scaled 1> out.log 2>&1```
