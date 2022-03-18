@@ -12,7 +12,6 @@ from datetime import datetime
 import pandas as pd
 import os
 import time
-import seaborn as sns
 
 # define a function to extract binding times and plot the binding time distribution for each ligand
 def getBoundFrac(bindXY, trackXY, posArr=None):

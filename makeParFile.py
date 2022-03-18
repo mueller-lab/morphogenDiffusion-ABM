@@ -13,13 +13,13 @@ parNames = ["BS","nrw","recepDens", "rTm"]
 # make lists of possible parameter values
 parDict={}
 parDict["BS"]=[2]
-parDict["nrw"]=[0,4,8,16,-4,-8,-16]
-parDict["recepDens"]=[20,200,2000]
-parDict["rTm"]= [0,1,6,11,16]
+parDict["nrw"]=[0]
+parDict["recepDens"]=[200]
+parDict["rTm"]= [1,16]
 kList=list(parDict)
 
 # permute the parameters to generate an array of all parameter combinations
-parArr= np.zeros((105,4))
+parArr= np.zeros((2,4))
 
 parList= [a for a in parDict.values()]
 ids=[len(a) for a in parList]
