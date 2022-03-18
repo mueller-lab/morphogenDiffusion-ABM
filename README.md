@@ -3,7 +3,7 @@
 The program simulates an agent-based model of morphogen diffusion in extracellular space on a two-dimensional grid.
 
 Developer- Amit Landge (amit.landge@uni-konstanz.de)  
-Requires- Python 3.7.12  ()
+Requires- Python 3.7.12  
 Dependencies- listed in require.yml  
 
 ## Installation
