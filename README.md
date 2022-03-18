@@ -8,7 +8,8 @@ Dependencies- listed in require.yml
 
 ## Installation
  - Install conda
- Please follow the instructions given [here] (https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) to install Anaconda or Miniconda for your system.  
+
+ Please follow the instructions given [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) to install Anaconda or Miniconda for your system.  
 
  - Create and activate a conda environment
 
