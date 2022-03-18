@@ -3,10 +3,24 @@
 The program simulates an agent-based model of morphogen diffusion in extracellular space on a two-dimensional grid.
 
 Developer- Amit Landge (amit.landge@uni-konstanz.de)  
-Requires- Python 3.7.12  
+Requires- Python 3.7.12  ()
 Dependencies- listed in require.yml  
 
+# Installation
+ - Install conda
+ Please follow the instructions given [here] (https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) to install Anaconda or Miniconda for your system.  
+
+ - Create and activate a conda environment
+ ```conda create --name envMD python=3.7 numpy scipy matplotlib pandas pathlib```
+
+ ```conda activate envMD```
+
+ - Clone the git repository
+ ```git clone https://github.com/mueller-lab/morphogenDiffusion-ABM.git```
+
 # Usage
+
+# morphogenDiffusionABM.py
 ```
 morphogenDiffusionABM.py [-h] [-n NUM [NUM ...]]
                                 [-gS GRIDSIZE [GRIDSIZE ...]] [-st STEPS]
