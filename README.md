@@ -11,11 +11,13 @@ Dependencies- listed in require.yml
  Please follow the instructions given [here] (https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) to install Anaconda or Miniconda for your system.  
 
  - Create and activate a conda environment
+
  ```conda create --name envMD python=3.7 numpy scipy matplotlib pandas pathlib```
 
  ```conda activate envMD```
 
  - Clone the git repository
+
  ```git clone https://github.com/mueller-lab/morphogenDiffusion-ABM.git```
 
 # Usage
