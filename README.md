@@ -43,10 +43,25 @@ optional arguments:
 ```
 
 - Example  
-```python -u morphogenDiffusionABM.py -n 200 0 0 0 100 -st 100 -nrw 1 -slr 0 4 -uImg Yes -iName s8192_4_scaled 1> out.log 2>&1```
+```python -u morphogenDiffusionABM.py -n 200 0 0 0 100 -st 100 -nrw 1 -slr 0 4 -uImg Yes -iName s8192_4_scaled 1>out.log 2>&1```
+
+# makeParFile.py
+Generates a parameter file named 'parFile_20220301.csv'. This file contains parameter combinations that are used to run a parameter
+screen for morphogen diffusion in extracellular space using morphogenDiffusionABM.py. Each row is a unique parameter combination. The
+row numbers needs to be provided as input to morphogenDiffusionABM.py to run a simulation with that parameter combination.
+
+- Example  
+```python -u makeParFile.py 1>out0.log 2>&1```
+
+After generating a parFile_20220301.csv, it can be used to set parameters for the simulations.
+
+- Example  
+```python -u morphogenDiffusionABM.py -n 200 0 0 0 100 -st 100 -nrw 1 -slr 0 4 -uImg Yes -iName s8192_4_scaled -parScr Yes -parID 0 1>out.log 2>&1```
+
 
 # trackAnalysis.py
-Generates a directory named 'analysis' in each simulation output directory and stores plots and .csv files after analysis.
+Generates a directory named 'analysis' in each simulation output directory and stores plots and .csv files after analysis. Before running this
+many simulations need to be completed. Each simulation with generate a separate output directory to store the results.
 
 - Example  
 ```python -u trackAnalysis.py 1>out1.log 2>&1```
