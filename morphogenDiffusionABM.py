@@ -540,7 +540,7 @@ if __name__=="__main__":
         extraCmap = np.array([[1.,1.,1.,1.] for i in range(len(sim.agents)-nonOepLen)])
         cmap = np.concatenate((cmap, extraCmap), axis=0)
 
-    # plotBnd="Yes"
+    # plotBnd="Yes" 
     plotBnd="No"
     for step in range(st):
         # print(f"Running step {step} at {time.time() - t1} sec ... ")
