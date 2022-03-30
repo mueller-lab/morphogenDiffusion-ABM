@@ -18,7 +18,8 @@ Dependencies- listed in require.yml
  ```conda activate envMD```
 
  - Clone the git repository  
- To install git, please run  
+
+To install git, please run  
  ```conda install -c anaconda git```  
 
  Then, clone the repository using -  
