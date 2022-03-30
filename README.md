@@ -17,8 +17,11 @@ Dependencies- listed in require.yml
 
  ```conda activate envMD```
 
- - Clone the git repository
+ - Clone the git repository  
+ To install git, please run  
+ ```conda install -c anaconda git```  
 
+ Then, clone the repository using -  
  ```git clone https://github.com/mueller-lab/morphogenDiffusion-ABM.git```
 
 ## Usage
