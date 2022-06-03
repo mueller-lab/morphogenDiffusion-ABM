@@ -66,7 +66,9 @@ optional arguments:
 - Example  
 ```python -u morphogenDiffusionABM.py -n 200 0 0 0 100 -st 100 -nrw 1 -slr 0 4 -uImg Yes -iName s8192_4_scaled```  
 The output is stored in ./data/yyyymmdd_HHMMSS_*/. Note that for each simulation a separate output directory is created.
+
 Runtime for this command = 0Hr:6Min:18sec, on a laptop with Intel(R) Core(TM) i7-8850H CPU @ 2.60GHz
+
 Memory requirement - 2GB
 
 ## makeParFile.py
