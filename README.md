@@ -25,6 +25,8 @@ To install git, please run
  Then, clone the repository using -  
  ```git clone https://github.com/mueller-lab/morphogenDiffusion-ABM.git```
 
+Typical install time ~ 5 min. 
+
 ## Usage
 
 ## morphogenDiffusionABM.py
