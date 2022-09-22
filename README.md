@@ -1,5 +1,7 @@
 # MorphogenDiffusion-ABM
 
+[![DOI](https://zenodo.org/badge/469838683.svg)](https://zenodo.org/badge/latestdoi/469838683)
+
 The program simulates an agent-based model of morphogen diffusion in extracellular space on a two-dimensional grid.
 
 Developer- Amit Landge (amit.landge@uni-konstanz.de)  
